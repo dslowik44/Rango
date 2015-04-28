@@ -1,0 +1,18 @@
+{% extends 'rango/base.html' %}
+
+{% block title %} Registration Success {% endblock %}
+
+{% block body_block %}             
+        Rango says: <br />
+		<strong>Thank You for registering!</strong><br /><br />
+{% endblock %}
+
+{% block footer_div %}
+<div>
+    <ul>
+	    <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+		<li><a href="{% url 'main' %}">Main</a></li>
+    </ul>
+</div>
+{% endblock %}

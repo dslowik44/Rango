@@ -1,5 +1,6 @@
 from django import forms
-from rango.models import Page, Category
+from rango.models import Page, Category, UserProfile
+from django.contrib.auth.models import User
 
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text="Please enter the category name.")
@@ -9,7 +10,7 @@ class CategoryForm(forms.ModelForm):
 
     class Meta:
         model = Category
-        fields = ('name',)
+        fields = ('name',) 
 
 
 class PageForm(forms.ModelForm):
@@ -22,13 +23,33 @@ class PageForm(forms.ModelForm):
         exclude = ('category',)
 		
     def clean(self):
-       import pdb
-       pdb.set_trace()
        cleaned_data = self.cleaned_data
-       url = cleaned_data.get('url') #returns None vs.raise KeyError if url not in cleaned_data.
+       url = cleaned_data.get('url') #get returns None vs.raise KeyError if url not in cleaned_data.
 	
        if url and not url.startswith('http://'):
           url = 'http://' + url
           cleaned_data['url'] = url
 	
        return cleaned_data
+   
+   
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput()) #alter field's default widget.
+   
+    class Meta:
+       model = User
+       fields = ('username', 'email', 'password') 
+	   
+    def clean_username(self):  # our extensions to inherited clean_username() method.
+      import re
+      username = self.cleaned_data['username'] 
+      if not re.search(r'^\w+$', username):
+          raise forms.ValidationError('Username can only contain '
+                                      'alphanumeric characters and the underscore.')
+      return username
+	     
+   
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+       model = UserProfile
+       fields = ('website', 'picture') #specify fields form will send to view.

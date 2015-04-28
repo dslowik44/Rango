@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Rango</title>
-    </head>
+{% extends 'rango/base.html' %}
 
-    <body>
+{% block title %} Add a website {% endblock %}
+
+{% block body_block %}
 	
 	{% if category %}
         <h3>Add a website to category: {{ category.name }}</h3>
@@ -27,7 +25,5 @@
 	{% else %}
 	    <h2>A category with the name '{{ slug }}' does not exist. </h2>
 	{% endif %}
-		<br /><a href="/rango/">Main</a><br />
-    </body>
 
-</html>
+{% endblock %}
