@@ -3,7 +3,10 @@
 {% block title %} Category: {{ category_name }} {% endblock %}
 
 {% block body_block %}
+  <div class="page-header">
     <h2>Category: {{ category_name }}</h2>
+  </div>
+    
     {% if category %}
        {% if pages %}
           <ul>
